@@ -2,7 +2,6 @@ import React from "react";
 import { Platform, StatusBar, StyleSheet, View, Text } from "react-native";
 import { AppLoading, Asset, Font, Icon } from "expo";
 import AppNavigator from "./navigation/AppNavigator";
-
 const { Ionicons } = Icon;
 
 export default class App extends React.Component {
@@ -24,7 +23,7 @@ export default class App extends React.Component {
         <View style={styles.container}>
           {Platform.OS === "ios" && <StatusBar barStyle="default" />}
           <View style={styles.header}>
-            <Text style={styles.logo}>AWESOME NEWS</Text>
+            <Text style={styles.logo}>Awesome News</Text>
             <Ionicons name="ios-menu" size={16} style={styles.hamburger} />
           </View>
           <AppNavigator />
@@ -45,7 +44,18 @@ export default class App extends React.Component {
         ...Icon.Ionicons.font,
         // We include SpaceMono because we use it in HomeScreen.js. Feel free
         // to remove this if you are not using it in your app
-        "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf")
+        "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf"),
+        "Rubik-Black": require("./node_modules/@shoutem/ui/fonts/Rubik-Black.ttf"),
+        "Rubik-BlackItalic": require("./node_modules/@shoutem/ui/fonts/Rubik-BlackItalic.ttf"),
+        "Rubik-Bold": require("./node_modules/@shoutem/ui/fonts/Rubik-Bold.ttf"),
+        "Rubik-BoldItalic": require("./node_modules/@shoutem/ui/fonts/Rubik-BoldItalic.ttf"),
+        "Rubik-Italic": require("./node_modules/@shoutem/ui/fonts/Rubik-Italic.ttf"),
+        "Rubik-Light": require("./node_modules/@shoutem/ui/fonts/Rubik-Light.ttf"),
+        "Rubik-LightItalic": require("./node_modules/@shoutem/ui/fonts/Rubik-LightItalic.ttf"),
+        "Rubik-Medium": require("./node_modules/@shoutem/ui/fonts/Rubik-Medium.ttf"),
+        "Rubik-MediumItalic": require("./node_modules/@shoutem/ui/fonts/Rubik-MediumItalic.ttf"),
+        "Rubik-Regular": require("./node_modules/@shoutem/ui/fonts/Rubik-Regular.ttf"),
+        "rubicon-icon-font": require("./node_modules/@shoutem/ui/fonts/rubicon-icon-font.ttf")
       })
     ]);
   };
@@ -82,3 +92,4 @@ const styles = StyleSheet.create({
     color: "#DDDDDD"
   }
 });
+console.disableYellowBox = true;

@@ -22,7 +22,7 @@ const LinksStack = createStackNavigator({
 });
 
 LinksStack.navigationOptions = {
-  tabBarLabel: "Just In"
+  tabBarLabel: "About"
 };
 
 const SettingsStack = createStackNavigator({
@@ -30,7 +30,7 @@ const SettingsStack = createStackNavigator({
 });
 
 SettingsStack.navigationOptions = {
-  tabBarLabel: "Politics"
+  tabBarLabel: "Info"
 };
 
 export default createMaterialTopTabNavigator(
