@@ -1,4 +1,4 @@
-# awesome-news
+# Awesome-News
 
 ## Install from source
 
