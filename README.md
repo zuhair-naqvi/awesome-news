@@ -10,4 +10,4 @@ Run on device from - https://expo.io/@zuhair/awesome-news
 
 ## Device Test - Galaxy S8
 
-![ScreenShot](https://i.imgur.com/JD2K8Ba.jpg)
+![ScreenShot](https://i.imgur.com/JD2K8Ba.jpg  | width=360)
