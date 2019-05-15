@@ -44,8 +44,8 @@ export default class HomeScreen extends React.Component {
           <View style={styles.welcomeContainer}>
             {newsFeed.items &&
               newsFeed.items.length > 0 &&
-              newsFeed.items.map(item => {
-                return <Text>{item.title}</Text>;
+              newsFeed.items.map((item, index) => {
+                return <Text key={`i${index}`}>{item.title}</Text>;
               })}
           </View>
         </ScrollView>
