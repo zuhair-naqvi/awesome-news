@@ -8,4 +8,6 @@ Clone the repo, from the root folder run "yarn". After the the process finish ru
 
 Run on device from - https://expo.io/@zuhair/awesome-news
 
-![Alt](https://i.imgur.com/JD2K8Ba.jpg)
+## Device Test - Galaxy S8
+
+![ScreenShot](https://i.imgur.com/JD2K8Ba.jpg)
