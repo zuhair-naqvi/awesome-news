@@ -49,6 +49,9 @@ export default createMaterialTopTabNavigator(
       style: {
         backgroundColor: "#333333"
       }
-    }
+    },
+    navigationOptions: ({ navigation }) => ({
+      tabBarVisible: navigation.state.index === 0
+    })
   }
 );

@@ -6,7 +6,7 @@ const getNews = async () => {
     let responseJson = await response.json();
     return responseJson;
   } catch (error) {
-    console.error(error);
+    console.error("Error: ", error);
   }
 };
 

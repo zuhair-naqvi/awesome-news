@@ -1,11 +1,8 @@
 import React from "react";
 import {
   TouchableOpacity,
-  Platform,
   ScrollView,
   StyleSheet,
-  Text,
-  WebView,
   RefreshControl
 } from "react-native";
 import { getNews } from "../api/abcnews";
@@ -13,8 +10,6 @@ import {
   View,
   Card,
   Caption,
-  Button,
-  Icon,
   Image,
   GridRow,
   ListView,
@@ -22,18 +17,13 @@ import {
   Tile,
   Title,
   Subtitle,
-  Overlay,
   Divider,
-  Lightbox,
   Spinner
 } from "@shoutem/ui";
 import moment from "moment";
 
-const formatDate = dateStr => moment(dateStr).format("MMM Do YYYY, h:mm:ss a");
+const formatDate = dateStr => moment(dateStr).format("MMM Do YYYY, h:mm a");
 
-const browser = ({ uri }) => {
-  return <WebView source={{ uri }} />;
-};
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null
@@ -41,8 +31,9 @@ export default class HomeScreen extends React.Component {
 
   state = {
     newsFeed: {},
-    refreshing: false
+    refreshing: true
   };
+
   _isMounted = false;
 
   constructor(props) {
@@ -53,89 +44,11 @@ export default class HomeScreen extends React.Component {
   async componentDidMount() {
     this._isMounted = true;
     const newsFeed = await getNews();
-    this.setState({ newsFeed });
+    this.setState({ newsFeed, refreshing: false });
   }
 
   componentWillUnmount() {
     this._isMounted = false;
-  }
-
-  renderRow(rowData, sectionId, index) {
-    // rowData contains grouped data for one row,
-    // so we need to remap it into cells and pass to GridRow
-    if (index === "0") {
-      return (
-        <TouchableOpacity key={index}>
-          <Lightbox
-            swipeToDismiss={false}
-            renderHeader={close => (
-              <TouchableOpacity onPress={close}>
-                <Icon name="close" style={styles.closeButton} />
-              </TouchableOpacity>
-            )}
-            renderContent={() => browser({ uri: rowData[0].link })}
-          >
-            <ImageBackground
-              styleName="large"
-              source={{ uri: rowData[0].thumbnail }}
-            >
-              <Tile>
-                <Title styleName="md-gutter-bottom" style={styles.heroText}>
-                  {rowData[0].title}
-                </Title>
-                <Subtitle
-                  styleName="sm-gutter-horizontal"
-                  style={{ fontSize: 12 }}
-                >
-                  {formatDate(rowData[0].pubDate)}
-                </Subtitle>
-              </Tile>
-            </ImageBackground>
-          </Lightbox>
-
-          <Divider styleName="line" />
-        </TouchableOpacity>
-      );
-    }
-
-    const cellViews = rowData.map((item, id) => {
-      return (
-        <TouchableOpacity key={id} styleName="flexible">
-          <Lightbox
-            swipeToDismiss={false}
-            renderHeader={close => (
-              <TouchableOpacity onPress={close}>
-                <Icon name="close" style={styles.closeButton} />
-              </TouchableOpacity>
-            )}
-            renderContent={() => browser({ uri: item.link })}
-          >
-            <Card styleName="flexible">
-              <Image styleName="medium-wide" source={{ uri: item.thumbnail }} />
-              <View styleName="content">
-                <Subtitle
-                  style={{ fontSize: 16, lineHeight: 18 }}
-                  numberOfLines={3}
-                >
-                  {item.title}
-                </Subtitle>
-                <View styleName="horizontal">
-                  <Caption
-                    styleName="collapsible"
-                    numberOfLines={2}
-                    style={{ fontSize: 12 }}
-                  >
-                    {formatDate(item.pubDate)}
-                  </Caption>
-                </View>
-              </View>
-            </Card>
-          </Lightbox>
-        </TouchableOpacity>
-      );
-    });
-
-    return <GridRow columns={2}>{cellViews}</GridRow>;
   }
 
   render() {
@@ -174,6 +87,80 @@ export default class HomeScreen extends React.Component {
     const newsFeed = await getNews();
     this.setState({ newsFeed, refreshing: false });
   };
+
+  renderRow(rowData, sectionId, index) {
+    // rowData contains grouped data for one row,
+    // so we need to remap it into cells and pass to GridRow
+    if (index === "0") {
+      const firstItem = rowData[0];
+      return (
+        <TouchableOpacity
+          key={index}
+          onPress={() => this._openLink(firstItem.link)}
+        >
+          <ImageBackground
+            styleName="large"
+            source={{ uri: firstItem.enclosure && firstItem.enclosure.link }}
+          >
+            <Tile>
+              <Title styleName="md-gutter-bottom" style={styles.heroText}>
+                {firstItem.title}
+              </Title>
+              <Subtitle
+                styleName="sm-gutter-horizontal"
+                style={{ fontSize: 12 }}
+              >
+                {formatDate(firstItem.pubDate)}
+              </Subtitle>
+            </Tile>
+          </ImageBackground>
+
+          <Divider styleName="line" />
+        </TouchableOpacity>
+      );
+    }
+
+    const cellViews = rowData.map((item, id) => {
+      const {
+        enclosure: { link }
+      } = item;
+      return (
+        <TouchableOpacity
+          key={id}
+          styleName="flexible"
+          onPress={() => this._openLink(item.link)}
+        >
+          <Card styleName="flexible">
+            <Image styleName="medium-wide" source={{ uri: link }} />
+            <View styleName="content">
+              <Subtitle
+                style={{ fontSize: 16, lineHeight: 18 }}
+                numberOfLines={3}
+              >
+                {item.title}
+              </Subtitle>
+              <View styleName="horizontal">
+                <Caption
+                  styleName="collapsible"
+                  numberOfLines={2}
+                  style={{ fontSize: 12 }}
+                >
+                  {formatDate(item.pubDate)}
+                </Caption>
+              </View>
+            </View>
+          </Card>
+        </TouchableOpacity>
+      );
+    });
+
+    return <GridRow columns={2}>{cellViews}</GridRow>;
+  }
+
+  _openLink(uri) {
+    const { navigation } = this.props;
+    navigation.push("Browser", { uri });
+  }
 }
 
 const styles = StyleSheet.create({
@@ -195,14 +182,5 @@ const styles = StyleSheet.create({
   },
   itemTitle: {
     fontSize: 16
-  },
-  closeButton: {
-    alignSelf: "flex-end",
-    color: "#FFF",
-    fontSize: 36,
-    textShadowColor: "rgba(0, 0, 0, 0.75)",
-    textShadowOffset: { width: -1, height: 1 },
-    textShadowRadius: 15,
-    padding: 10
   }
 });

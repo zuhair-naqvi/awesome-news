@@ -1,10 +1,20 @@
-import React from 'react';
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import React from "react";
+import { createAppContainer, createStackNavigator } from "react-navigation";
 
-import MainTabNavigator from './MainTabNavigator';
+import MainTabNavigator from "./MainTabNavigator";
+import BrowserModal from "./BrowserModal";
 
-export default createAppContainer(createSwitchNavigator({
-  // You could add another route here for authentication.
-  // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-  Main: MainTabNavigator,
-}));
+const BrowserStack = createStackNavigator({ BrowserModal });
+
+export default createAppContainer(
+  createStackNavigator(
+    {
+      Main: MainTabNavigator,
+      Browser: BrowserStack
+    },
+    {
+      headerMode: "none",
+      mode: "modal"
+    }
+  )
+);

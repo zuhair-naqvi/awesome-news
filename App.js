@@ -22,10 +22,6 @@ export default class App extends React.Component {
       return (
         <View style={styles.container}>
           {Platform.OS === "ios" && <StatusBar barStyle="default" />}
-          <View style={styles.header}>
-            <Text style={styles.logo}>Awesome News</Text>
-            <Ionicons name="ios-menu" size={36} style={styles.hamburger} />
-          </View>
           <AppNavigator />
         </View>
       );
