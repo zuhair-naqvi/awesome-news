@@ -44,12 +44,10 @@ export default createMaterialTopTabNavigator(
       activeTintColor: "#FFFFFF",
       inactiveTintColor: "#DDDDDD",
       labelStyle: {
-        fontSize: 10,
         margin: 0
       },
       style: {
-        backgroundColor: "#333333",
-        height: 30
+        backgroundColor: "#333333"
       }
     }
   }

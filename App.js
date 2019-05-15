@@ -24,7 +24,7 @@ export default class App extends React.Component {
           {Platform.OS === "ios" && <StatusBar barStyle="default" />}
           <View style={styles.header}>
             <Text style={styles.logo}>Awesome News</Text>
-            <Ionicons name="ios-menu" size={16} style={styles.hamburger} />
+            <Ionicons name="ios-menu" size={36} style={styles.hamburger} />
           </View>
           <AppNavigator />
         </View>
@@ -85,8 +85,8 @@ const styles = StyleSheet.create({
   },
   logo: {
     color: "#FFF",
-    fontSize: 12,
-    fontWeight: "500"
+    fontSize: 24,
+    fontWeight: "300"
   },
   hamburger: {
     color: "#DDDDDD"

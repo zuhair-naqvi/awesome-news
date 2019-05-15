@@ -66,22 +66,33 @@ export default class HomeScreen extends React.Component {
     if (index === "0") {
       return (
         <TouchableOpacity key={index}>
-          <ImageBackground
-            styleName="large"
-            source={{ uri: rowData[0].thumbnail }}
+          <Lightbox
+            swipeToDismiss={false}
+            renderHeader={close => (
+              <TouchableOpacity onPress={close}>
+                <Icon name="close" style={styles.closeButton} />
+              </TouchableOpacity>
+            )}
+            renderContent={() => browser({ uri: rowData[0].link })}
           >
-            <Tile>
-              <Title styleName="md-gutter-bottom" style={styles.heroText}>
-                {rowData[0].title}
-              </Title>
-              <Subtitle
-                styleName="sm-gutter-horizontal"
-                style={{ fontSize: 8 }}
-              >
-                {formatDate(rowData[0].pubDate)}
-              </Subtitle>
-            </Tile>
-          </ImageBackground>
+            <ImageBackground
+              styleName="large"
+              source={{ uri: rowData[0].thumbnail }}
+            >
+              <Tile>
+                <Title styleName="md-gutter-bottom" style={styles.heroText}>
+                  {rowData[0].title}
+                </Title>
+                <Subtitle
+                  styleName="sm-gutter-horizontal"
+                  style={{ fontSize: 12 }}
+                >
+                  {formatDate(rowData[0].pubDate)}
+                </Subtitle>
+              </Tile>
+            </ImageBackground>
+          </Lightbox>
+
           <Divider styleName="line" />
         </TouchableOpacity>
       );
@@ -91,6 +102,7 @@ export default class HomeScreen extends React.Component {
       return (
         <TouchableOpacity key={id} styleName="flexible">
           <Lightbox
+            swipeToDismiss={false}
             renderHeader={close => (
               <TouchableOpacity onPress={close}>
                 <Icon name="close" style={styles.closeButton} />
@@ -102,7 +114,7 @@ export default class HomeScreen extends React.Component {
               <Image styleName="medium-wide" source={{ uri: item.thumbnail }} />
               <View styleName="content">
                 <Subtitle
-                  style={{ fontSize: 10, lineHeight: 12 }}
+                  style={{ fontSize: 16, lineHeight: 18 }}
                   numberOfLines={3}
                 >
                   {item.title}
@@ -111,7 +123,7 @@ export default class HomeScreen extends React.Component {
                   <Caption
                     styleName="collapsible"
                     numberOfLines={2}
-                    style={{ fontSize: 6 }}
+                    style={{ fontSize: 12 }}
                   >
                     {formatDate(item.pubDate)}
                   </Caption>
@@ -176,18 +188,18 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   heroText: {
-    fontSize: 16,
+    fontSize: 24,
     textShadowColor: "rgba(0, 0, 0, 0.75)",
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 15
   },
   itemTitle: {
-    fontSize: 8
+    fontSize: 16
   },
   closeButton: {
     alignSelf: "flex-end",
     color: "#FFF",
-    fontSize: 16,
+    fontSize: 36,
     textShadowColor: "rgba(0, 0, 0, 0.75)",
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 15,
