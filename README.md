@@ -2,7 +2,7 @@
 
 ## Install from source
 
-Clone the repo, from the root folder run "yarn". After the the process finish run the command "yarn start"
+Clone the repo, from the root folder run "yarn". After the process finishes run "yarn start"
 
 ## Install a build
 
