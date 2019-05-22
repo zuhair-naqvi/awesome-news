@@ -4,7 +4,8 @@ import { StyleSheet, WebView } from "react-native";
 
 export default class BrowserModal extends Component {
   static navigationOptions = {
-    header: null
+    header: null,
+    gesturesEnabled: false
   };
 
   render() {
